@@ -45,7 +45,7 @@ class PilotedRobot:
 
     # Mode variable, used to keep track of the current LED color and song is played
     # when the playSong() function is called
-    mode = 0
+    LEDsMode = 0
 
     # Status array used in the movement of the robot
     # Format:   W      A      S      D    is key pressed?
@@ -213,26 +213,31 @@ class PilotedRobot:
         match mode:
             case 1:
                 self.leds_color('green')
-                self.mode = 1
+                self.LEDsMode = 1
             case 2:
                 self.leds_color('orange')
-                self.mode = 2
+                self.LEDsMode = 2
             case 3:
                 self.leds_color('yellow')
-                self.mode = 3
+                self.LEDsMode = 3
             case 4:
                 self.leds_color('red')
-                self.mode = 4
+                self.LEDsMode = 4
 
     def playSong(self):
-        # Added by authors, loads and plays part of the Tetris theme
-        # This code was adapted from our song.py file
+        match self.LEDsMode:
+            case 0: return
+            case 1: self.playSongMode1()
+            case 2: self.playSongMode2()
+            case 3: self.playSongMode3()
+            case 4: self.playSongMode4()
 
+    def playSongMode1(self):
+        # Tetris theme
         # BPM of music is ~150 BPM
         # Duration Constants
         QUAR = (b'\x1A') # Quarter note, 26/64 seconds
         EIGT = (b'\x0D') # Eighth note, 13/64 seconds
-
         # Note Constants
         A = (b'\x45') # Note 69
         B = (b'\x47') # Note 71
@@ -242,7 +247,7 @@ class PilotedRobot:
 
         #Start of Song 0
         self.sendCommand(b'\x8C') # 140 Song command
-        self.sendCommand(b'\x00\x0D') # song 0, length of 16 notes
+        self.sendCommand(b'\x00\x0D') # song slot 0, length of 16 notes
         # Measure 1
         self.sendCommand(E + QUAR)
         self.sendCommand(B + EIGT)
@@ -261,3 +266,123 @@ class PilotedRobot:
         self.sendCommand(B + QUAR)
 
         self.sendCommand(b'\x8D\x00') # Play song 0
+
+    def playSongMode2(self):
+        # Can be replaced by a different song in the future
+        
+        # Tetris theme part 2
+        # BPM of music is ~150 BPM
+        # Duration Constants
+        HALF = (b'\x33') # Half note, 51/64 seconds
+        QUAR = (b'\x1A') # Quarter note, 26/64 seconds
+        EIGT = (b'\x0D') # Eighth note, 13/64 seconds
+        # Note Constants
+        A = (b'\x45') # Note 69
+        B = (b'\x47') # Note 71
+        C = (b'\x48') # Note 72
+        D = (b'\x4A') # Note 74
+        E = (b'\x4C') # Note 76
+        F = (b'\x4D') # Note 77
+        G = (b'\x4F') # Note 79
+        AH = (b'\x51') # Note 81
+        N = (b'\x00') # Null note for empty space
+
+        time.sleep(1)
+        self.sendCommand(b'\x8C') # 140 Song command
+        time.sleep(1)
+        self.sendCommand(b'\x01\x10') # song slot 1, length of 16 notes
+        # Measure 3 continued
+        self.sendCommand(E + QUAR)
+        # Measure 4
+        self.sendCommand(C + QUAR)
+        self.sendCommand(A + QUAR)
+        self.sendCommand(A + HALF)
+        self.sendCommand(N + QUAR) # Null note to represent rest
+        # Measure 5
+        self.sendCommand(D + EIGT)
+        self.sendCommand(D + EIGT)
+        self.sendCommand(F + EIGT)
+        self.sendCommand(AH + QUAR) # A from higher octave
+        self.sendCommand(G + EIGT)
+        self.sendCommand(F + EIGT)
+        # Measure 6
+        self.sendCommand(E + QUAR)
+        self.sendCommand(C + EIGT)
+        self.sendCommand(E + QUAR)
+        self.sendCommand(D + EIGT)
+        self.sendCommand(C + EIGT)
+    
+    def playSongMode3(self):
+        # Can be replaced by a different song in the future
+        
+        # Tetris theme part 3
+        # BPM of music is ~150 BPM
+        # Duration Constants
+        HALF = (b'\x33') # Half note, 51/64 seconds
+        QUAR = (b'\x1A') # Quarter note, 26/64 seconds
+        EIGT = (b'\x0D') # Eighth note, 13/64 seconds
+        # Note Constants
+        A = (b'\x45') # Note 69
+        B = (b'\x47') # Note 71
+        C = (b'\x48') # Note 72
+        D = (b'\x4A') # Note 74
+        E = (b'\x4C') # Note 76
+
+        self.sendCommand(b'\x8C') # 140 Song command
+        self.sendCommand(b'\x02\x0E') # song slot 2, length of 14 notes
+        # Measure 7
+        self.sendCommand(B + QUAR)
+        self.sendCommand(B + EIGT)
+        self.sendCommand(C + EIGT)
+        self.sendCommand(D + QUAR)
+        self.sendCommand(E + QUAR)
+        # Measure 8
+        self.sendCommand(C + QUAR)
+        self.sendCommand(A + QUAR)
+        self.sendCommand(A + HALF)
+        # Measure 9
+        self.sendCommand(E + QUAR)
+        self.sendCommand(B + EIGT)
+        self.sendCommand(C + EIGT)
+        self.sendCommand(D + QUAR)
+        self.sendCommand(C + EIGT)
+        self.sendCommand(B + EIGT)
+
+
+    
+    def playSongMode4(self):
+        # Can be replaced by a different song in the future
+        
+        # Tetris theme part 4
+        # BPM of music is ~150 BPM
+        # Duration Constants
+        HALF = (b'\x33') # Half note, 51/64 seconds
+        QUAR = (b'\x1A') # Quarter note, 26/64 seconds
+        EIGT = (b'\x0D') # Eighth note, 13/64 seconds
+        # Note Constants
+        A = (b'\x45') # Note 69
+        B = (b'\x47') # Note 71
+        C = (b'\x48') # Note 72
+        D = (b'\x4A') # Note 74
+        E = (b'\x4C') # Note 76
+
+        self.sendCommand(b'\x8C') # 140 Song command
+        time.sleep(1)
+        self.sendCommand(b'\x03\x0E') # song slot 3, length of 14 notes
+        # Measure 10
+        self.sendCommand(A + QUAR)
+        self.sendCommand(A + EIGT)
+        self.sendCommand(C + EIGT)
+        self.sendCommand(E + QUAR)
+        self.sendCommand(D + EIGT)
+        self.sendCommand(C + EIGT)
+        # Measure 11
+        self.sendCommand(B + QUAR)
+        self.sendCommand(B + EIGT)
+        self.sendCommand(C + EIGT)
+        self.sendCommand(D + QUAR)
+        self.sendCommand(E + QUAR)
+        # Measure 12
+        self.sendCommand(C + QUAR)
+        self.sendCommand(A + QUAR)
+        self.sendCommand(A + HALF)
