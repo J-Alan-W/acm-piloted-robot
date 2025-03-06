@@ -45,7 +45,7 @@ class PilotedRobot:
 
     # Mode variable, used to keep track of the current LED color and song is played
     # when the playSong() function is called
-    LEDsMode = 0
+    songMode = 0
 
     # Status array used in the movement of the robot
     # Format:   W      A      S      D    is key pressed?
@@ -213,19 +213,19 @@ class PilotedRobot:
         match mode:
             case 1:
                 self.leds_color('green')
-                self.LEDsMode = 1
+                self.songMode = 1
             case 2:
                 self.leds_color('orange')
-                self.LEDsMode = 2
+                self.songMode = 2
             case 3:
                 self.leds_color('yellow')
-                self.LEDsMode = 3
+                self.songMode = 3
             case 4:
                 self.leds_color('red')
-                self.LEDsMode = 4
+                self.songMode = 4
 
     def playSong(self):
-        match self.LEDsMode:
+        match self.songMode:
             case 0: return
             case 1: self.playSongMode1()
             case 2: self.playSongMode2()

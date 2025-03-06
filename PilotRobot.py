@@ -148,7 +148,7 @@ while gamepad.isConnected():
         elif control == TR_R1:
             if value:
                 bt7274.switchMode(2)
-        elif control == TR_L2:
+        elif control == TR_R2:
             if value:
                 bt7274.switchMode(4)
 
