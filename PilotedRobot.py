@@ -1,18 +1,13 @@
 # Authors: Tytrez Dixon, Cannon Miles, Alan Wallace
 # Last Updated: 3/5/2025
-# Purpose: Functions to enable the iRobot Create 2 to be controlled by ControllerUI.py
-# Version for controlling the robot using a gamepad
+# Purpose: Functions to enable the iRobot Create 2 to be controlled via a gamepad (controller)
+# We used a wireless 2.4Ghz PS3 Controller
 
 import serial 
 import time
 import struct
 
 class PilotedRobot:
-    """_summary_
-
-    Returns:
-        _type_: _description_
-    """
     # commands definitions
     start_cmd               =  b'\x80' # 128
     safe_cmd                =  b'\x83' # 131
@@ -48,6 +43,10 @@ class PilotedRobot:
     cliff_front_right_signal =  b'\x1E'
     cliff_right_signal		 =  b'\x1F'
 
+    # Mode variable, used to keep track of the current LED color and song is played
+    # when the playSong() function is called
+    mode = 0
+
     # Status array used in the movement of the robot
     # Format:   W      A      S      D    is key pressed?
     status = [False, False, False, False]
@@ -65,49 +64,26 @@ class PilotedRobot:
         time.sleep(1)
         self.serial_connection.open()
 
-    def sendCommand(self, input):
-        """_summary_
-
-        Args:
-            input (_type_): _description_
-        """
-        self.serial_connection.write(input)
+    def sendCommand(self, command):
+        self.serial_connection.write(command)
 
     def read(self, howManyBytes):
-        """_summary_
-
-        Args:
-            howManyBytes (_type_): _description_
-
-        Returns:
-            _type_: _description_
-        """
         buttonState = self.serial_connection.read(howManyBytes)
         byte = struct.unpack('B', buttonState)[0]
         binary = '{0:08b}'.format(byte)
         return binary
 
     def flush(self):
-        """_summary_
-        """
         self.serial_connection.reset_input_buffer()
         time.sleep(0.5)
 
-
     def read_wall_sensor(self):
-        """_summary_
-        """
         self.sendCommand(self.sensors_cmd + self.wall_signal)
 
     def start(self):
-        """_summary_
-        """
         self.sendCommand(self.start_cmd)
 
     def startSequence(self):
-        """_summary_
-        """
-        # Function created by authors
         # Performs the entire startup sequence with one function call for convenience
         self.sendCommand(self.start_cmd)
         time.sleep(1)
@@ -119,55 +95,26 @@ class PilotedRobot:
         print('Startup sequence complete!')
 
     def stop(self):
-        """_summary_
-        """
         self.sendCommand(self.stop_cmd)
         print('Disconnected!') 
 
     def reset(self):
-        """_summary_
-        """
         self.sendCommand(self.reset_cmd)
         time.sleep(5)
 
     def safe(self):
-        """_summary_
-        """
         self.sendCommand(self.safe_cmd)
 
     def seekDock(self):
-        """_summary_
-        """
         self.sendCommand(self.seek_dock_cmd)   
 
     def drive(self, velocityHighByte, velocityLowByte, radiusHighByte, radiushLowByte):
-        """_summary_
-
-        Args:
-            velocityHighByte (_type_): _description_
-            velocityLowByte (_type_): _description_
-            radiusHighByte (_type_): _description_
-            radiushLowByte (_type_): _description_
-        """
         self.sendCommand(self.drive_cmd + velocityHighByte + velocityLowByte + radiusHighByte + radiushLowByte)
 
     def driveDirect(self, rightWheelHighByte, rightWheelLowByte, leftWheelHighByte, leftWheelLowByte):
-        """_summary_
-
-        Args:
-            rightWheelHighByte (_type_): _description_
-            rightWheelLowByte (_type_): _description_
-            leftWheelHighByte (_type_): _description_
-            leftWheelLowByte (_type_): _description_
-        """
         self.sendCommand(self.drive_direct_cmd + rightWheelHighByte + rightWheelLowByte + leftWheelHighByte + leftWheelLowByte)
 
     def leds_color(self, color: str):
-        """_summary_
-
-        Args:
-            color (str): _description_
-        """
         # Added by authors, allows the Controller to pass in a color rather than series of arguments for the leds() method
         match color:
             case "green":
@@ -184,35 +131,15 @@ class PilotedRobot:
                 self.sendCommand(self.leds_cmd + b'\x00' + b'\xFF' + b'\xFF')
 
     def leds(self, ledBits, powerColor, powerIntensity):
-        """_summary_
-
-        Args:
-            ledBits (_type_): _description_
-            powerColor (_type_): _description_
-            powerIntensity (_type_): _description_
-        """
         self.sendCommand(ledBits + powerColor + powerIntensity)        
 
     def digitLEDsASCII(self, digit3, digit2, digit1, digit0):
-        """_summary_
-
-        Args:
-            digit3 (_type_): _description_
-            digit2 (_type_): _description_
-            digit1 (_type_): _description_
-            digit0 (_type_): _description_
-        """
         try:
             self.sendCommand(self.ascii_digit_leds_cmd + digit3.encode("ascii") + digit2.encode("ascii") + digit1.encode("ascii") + digit0.encode("ascii"))
         except IndexError:
             print('LED display failed: Not enough numbers')
 
     def update_motion(self):
-        """_summary_
-
-        Returns:
-            _type_: _description_
-        """
         # This function adjusts the movement of the robot, after the status register has been updated.
         # For example, to make the robot go forward, you would use set_fwd_status(true) then update_motion()
 
@@ -269,40 +196,35 @@ class PilotedRobot:
         return status_num
 
     def set_fwd_status(self, val: bool):
-        """_summary_
-
-        Args:
-            val (bool): _description_
-        """
         self.status[0] = val
 
     def set_left_status(self, val: bool):
-        """_summary_
-
-        Args:
-            val (bool): _description_
-        """
         self.status[1] = val
 
     def set_back_status(self, val: bool):
-        """_summary_
-
-        Args:
-            val (bool): _description_
-        """
         self.status[2] = val
 
     def set_right_status(self, val: bool):
-        """_summary_
-
-        Args:
-            val (bool): _description_
-        """
         self.status[3] = val
 
+    def switchMode(self, mode: int):
+        # Switches between four different 'modes' aka LED color
+        # Each color has an associated song that goes with it
+        match mode:
+            case 1:
+                self.leds_color('green')
+                self.mode = 1
+            case 2:
+                self.leds_color('orange')
+                self.mode = 2
+            case 3:
+                self.leds_color('yellow')
+                self.mode = 3
+            case 4:
+                self.leds_color('red')
+                self.mode = 4
+
     def playSong(self):
-        """_summary_
-        """
         # Added by authors, loads and plays part of the Tetris theme
         # This code was adapted from our song.py file
 
