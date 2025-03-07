@@ -41,7 +41,7 @@ joystickSpeed = 'RIGHT-Y'
 
 # Initialize a new Robot and start it
 # Our robot's name is BT-7274
-bt7274: PilotedRobot = PilotedRobot("/dev/ttyUSB0")
+bt7274: PilotedRobot = PilotedRobot("/dev/ttyUSB0") # Potential future work: Try different serial ports if USB0 not found?
 bt7274.startSequence()
 # Protocol 1: Link to Pilot
 # Protocol 2: Uphold the Mission
@@ -54,8 +54,11 @@ print('Controls transferred to Pilot.')
 
 # Wait for a connection
 if not Gamepad.available():
-    print('Please connect your gamepad...')
+    print('Please connect your gamepad. Waiting')
     while not Gamepad.available():
+        # For debugging purposes, provide a visual to represent waiting for gamepad.
+        print('.', end='')
+        # Specify a time interval so we don't hog system resources by checking too often
         time.sleep(1.0)
 gamepad = gamepadType()
 print('Gamepad connected')
@@ -75,7 +78,7 @@ while gamepad.isConnected():
 
     # Determine the type
     if eventType == 'BUTTON':
-        # Why is this a huge elif chain? It avoids checking one impulse multiple times.
+        # This is a huge elif chain because it avoids checking one impulse multiple times.
         
         # Face buttons are used for making the robot move while pressed
         if control == FB_Up:
@@ -153,9 +156,10 @@ while gamepad.isConnected():
                 bt7274.switchMode(4)
 
         elif (control == SB_Start) and value:
+            # Play song if a song mode has been selected with the triggers
             bt7274.playSong()
         elif (control == SB_Select) and value:
-            bt7274.reset()
+            # Reset the robot
             bt7274.startSequence()
         elif (control == SB_PS) and value:
             print('Protocol 1: Link to Pilot')

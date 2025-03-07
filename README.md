@@ -9,8 +9,8 @@ It is released under the MIT License (see GamepadLibraryLicense.txt).
 
 <h2>USAGE:</h2>
 No formal installation is needed, simply use the command 
-<code>git clone https://github.com/J-Alan-W/acm-piloted-robot</code><br>
-to place the code in your desired directory, then create a crontab job to run PilotRobot.py on startup using
+<code>git clone https://github.com/J-Alan-W/acm-piloted-robot</code>
+ to place the code in your desired directory, then create a crontab job to run PilotRobot.py on startup using
 <code>crontab -e</code>.<br><br>
 The crontab job should look something like this:<br>
 <code>@reboot python3 /home/roomba/acm-piloted-robot/PilotRobot.py</code> <br><br>
@@ -21,10 +21,10 @@ Your filepath may vary depending on your username and where you place the folder
 Left Joystick: <br>
 Right Joystick: <br>
 <br>
-Triangle: Move Forward until button released <br>
-Circle: Turn Right until button released<br>
-Cross (X): Move Backwards until button releasedd<br>
-Square: Turn Left until button released<br>
+Triangle/Top face button: Move Forward until button released <br>
+Circle/Right face button: Turn Right until button released<br>
+Cross/Bottom face button: Move Backwards until button releasedd<br>
+Square/Left face button: Turn Left until button released<br>
 <br>
 D-Pad Up: Move Forward for 0.5 seconds<br>
 D-Pad Right: Turn Right for 0.5 seconds<br>
