@@ -9,9 +9,6 @@ import Gamepad
 from Controllers import PS3
 from PilotedRobot import PilotedRobot
 
-# Set up gamepad
-gamepadType = PS3
-
 #----------------------------------------
 # Start the robot
 #----------------------------------------
@@ -29,6 +26,9 @@ print('Controls transferred to Pilot.')
 # Start the gamepad
 #----------------------------------------
 
+# Set up gamepad
+gamepadType = PS3
+
 # Wait for a connection
 if not Gamepad.available():
     print('Please connect your gamepad. Waiting', end='')
@@ -38,7 +38,7 @@ if not Gamepad.available():
         # Specify a time interval so we don't hog system resources by checking too often
         time.sleep(1.0)
 gamepad = gamepadType()
-print('Gamepad connected')
+print('Gamepad connected. Welcome back Pilot.')
 
 # Set an inital state
 linearSpeed = 0.0
@@ -48,7 +48,7 @@ turnSpeed = 0.0
 # Handle gamepad updates
 #----------------------------------------
 
-# Handle gamepad updates one at a time
+# Handle gamepad updates one at a time (See polling examples in Gamepad library)
 while gamepad.isConnected():
     # Wait for the next event
     eventType, control, value = gamepad.getNextEvent()
@@ -59,7 +59,7 @@ while gamepad.isConnected():
         
         # Face buttons are used for making the robot move while pressed
         if control == 'TRIANGLE':
-            # Example of an event on press and release)
+            # Example of an event on press and release
             if value:
                 bt7274.set_fwd_status(1)
                 bt7274.update_motion()
@@ -116,8 +116,7 @@ while gamepad.isConnected():
             bt7274.set_left_status(0)
             bt7274.update_motion()
 
-        # Triggers should change the color of the LEDs
-        # and also what song should play.
+        # Triggers should change the color of the LEDs, and also what song should play.
         elif (control == 'L1') and value:
             bt7274.switchMode(3)
         elif (control == 'L2') and value:

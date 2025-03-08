@@ -287,9 +287,8 @@ class PilotedRobot:
         AH = (b'\x51') # Note 81
         N = (b'\x00') # Null note for empty space
 
-        time.sleep(1)
+        # Start of Song 1
         self.sendCommand(b'\x8C') # 140 Song command
-        time.sleep(1)
         self.sendCommand(b'\x01\x10') # song slot 1, length of 16 notes
         # Measure 3 continued
         self.sendCommand(E + QUAR)
@@ -347,8 +346,6 @@ class PilotedRobot:
         self.sendCommand(D + QUAR)
         self.sendCommand(C + EIGT)
         self.sendCommand(B + EIGT)
-
-
     
     def playSongMode4(self):
         # Can be replaced by a different song in the future
@@ -367,7 +364,6 @@ class PilotedRobot:
         E = (b'\x4C') # Note 76
 
         self.sendCommand(b'\x8C') # 140 Song command
-        time.sleep(1)
         self.sendCommand(b'\x03\x0E') # song slot 3, length of 14 notes
         # Measure 10
         self.sendCommand(A + QUAR)

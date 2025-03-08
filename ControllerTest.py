@@ -1,27 +1,26 @@
 # Import necessary libraries
-# PilotedRobot is built off of code from CS330 Robotics, 
 # Time is built-in, Gamepad is from https://github.com/piborg/Gamepad
 import time
 import Gamepad
 from Controllers import PS3
 
-# Set up gamepad
-gamepadType = PS3
-
 #----------------------------------------
 # Start the gamepad
 #----------------------------------------
 
+# Set up gamepad
+gamepadType = PS3
+
 # Wait for a connection
 if not Gamepad.available():
-    print('Please connect your gamepad. Waiting')
+    print('Please connect your gamepad. Waiting', end='')
     while not Gamepad.available():
         # For debugging purposes, provide a visual to represent waiting for gamepad.
         print('.', end='')
         # Specify a time interval so we don't hog system resources by checking too often
         time.sleep(1.0)
 gamepad = gamepadType()
-print('Gamepad connected')
+print('Gamepad connected. Welcome back Pilot.')
 
 # Set an inital state
 speed = 0.0
