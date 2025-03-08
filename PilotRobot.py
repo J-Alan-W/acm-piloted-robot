@@ -64,8 +64,8 @@ gamepad = gamepadType()
 print('Gamepad connected')
 
 # Set an inital state
-speed = 0.0
-steering = 0.0
+linearSpeed = 0.0
+turnSpeed = 0.0
 
 #----------------------------------------
 # Handle gamepad updates
@@ -115,28 +115,28 @@ while gamepad.isConnected():
         # This is useful for learn-to-code games like "Get the Mouse to the Cheese"
         # The button press is and'ed with value to make sure the action only triggers on the press, not the release.
         elif (control == DP_Up) and value:
-            bt7274.set_fwd_status(True)
+            bt7274.set_fwd_status(1)
             bt7274.update_motion()
             time.sleep(0.5)
-            bt7274.set_fwd_status(False)
+            bt7274.set_fwd_status(0)
             bt7274.update_motion()
         elif (control == DP_Down) and value:
-            bt7274.set_back_status(True)
+            bt7274.set_back_status(1)
             bt7274.update_motion()
             time.sleep(0.5)
-            bt7274.set_back_status(False)
+            bt7274.set_back_status(0)
             bt7274.update_motion()
         elif (control == DP_Left) and value:
-            bt7274.set_left_status(True)
+            bt7274.set_left_status(1)
             bt7274.update_motion()
             time.sleep(0.5)
-            bt7274.set_left_status(False)
+            bt7274.set_left_status(0)
             bt7274.update_motion()
         elif (control == DP_Right) and value:
-            bt7274.set_right_status(True)
+            bt7274.set_right_status(1)
             bt7274.update_motion()
             time.sleep(0.5)
-            bt7274.set_right_status(False)
+            bt7274.set_right_status(0)
             bt7274.update_motion()
 
         # Triggers should change the color of the LEDs
@@ -170,8 +170,8 @@ while gamepad.isConnected():
         # Joystick changed
         if control == joystickSpeed:
             # Speed control (inverted)
-            speed = -value
+            linearSpeed = -value
         elif control == joystickSteering:
             # Steering control (not inverted)
-            steering = value
-        print('%+.1f %% speed, %+.1f %% steering' % (speed * 100, steering * 100))
+            turnSpeed = value
+        print('%+.1f %% speed, %+.1f %% steering' % (linearSpeed * 100, turnSpeed * 100))
