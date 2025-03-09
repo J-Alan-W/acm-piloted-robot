@@ -48,7 +48,7 @@ These instructions are mainly for other FMU ACM members with a similar use case 
 <ol>
 <li> Using the Raspberry Pi Imager (https://www.raspberrypi.com/software/), select Raspbian Lite, setup a user named 'roomba', and set up SSH to your preferred network. Note that FMU WiFi might not work for this because you have to authenticate before the network will allow you to connect.
 <li> Connect to the Raspberry Pi via SSH (https://www.raspberrypi.com/documentation/computers/remote-access.html)
-<li> Type the command <code>sudo apt update</code> and <code>sudo apt full-upgrade</code>
+<li> Type the commands <code>sudo apt update</code> and <code>sudo apt full-upgrade</code>
 <li> Newer versions of Raspbian don't have git installed by default. You can check via <code>git --version</code>. If git isn't found, install it via <code>sudo apt-get install git</code>
 <li> Clone the repo with <code>git clone https://github.com/J-Alan-W/acm-piloted-robot</code>
 <li> Python should be installed by default. Check the version with <code>python3 --version</code>
@@ -60,7 +60,6 @@ These instructions are mainly for other FMU ACM members with a similar use case 
     Assuming your username is roomba and you place it in the default folder.
 <li> Hit CTRL-S and CTRL-X to save and exit
 <li> Check everything wrote correctly using the <code>crontab -l</code> command.
-<li> 
 </ol><br>
 At this point, you should be ready to go. Connect the iRobot Create 2 to the Raspberry Pi, plug in the controller dongle (if you have one), and reboot the Pi. After reboot, it should work!
 <br><br>
