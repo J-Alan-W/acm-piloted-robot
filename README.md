@@ -18,8 +18,8 @@ The crontab job should look something like this:<br>
 Your filepath may vary depending on your username and where you place the folder.)
 
 <h2>CONTROLLER LAYOUT:</h2>
-Left Joystick: <br>
-Right Joystick: <br>
+Left Joystick: Pushing the stick left or right makes the robot turn.<br>
+Right Joystick: Pushing the stick up or down makes the robot move linearly<br>
 <br>
 Triangle/Top face button: Move Forward until button released <br>
 Circle/Right face button: Turn Right until button released<br>
