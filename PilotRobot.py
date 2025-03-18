@@ -43,7 +43,7 @@ print('Gamepad connected. Welcome back Pilot.')
 '''
 This bit of code was only used for getting the numerical value of joystick magnitude
 (e.g. LEFT-Y is currently at 45% pushed)
-Currently, any push just toggles speed in that direction, so this is unused
+Currently, any push just toggles movement in that direction, so this is unused
 
 # Set an inital state
 linearSpeed = 0.0
@@ -158,10 +158,10 @@ while gamepad.isConnected():
         elif (control == 'RIGHT-Y') and (value > 0.1):
             # In these statements, the 0.1 or -0.1 just provides a barrier 
             # so the robot's movement isn't too sensitive to stick drift.
-            bt7274.set_fwd_status(1)
+            bt7274.set_back_status(1)
             bt7274.update_motion()
         elif (control == 'RIGHT-Y') and (value < -0.1):
-            bt7274.set_back_status(1)
+            bt7274.set_fwd_status(1)
             bt7274.update_motion()
         elif (control == 'LEFT-X') and (value == 0):
             bt7274.set_right_status(0)
