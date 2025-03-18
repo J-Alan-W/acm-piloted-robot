@@ -225,6 +225,7 @@ class PilotedRobot:
                 self.songMode = 4
 
     def playSong(self):
+        print("Playing song", self.songMode)
         match self.songMode:
             case 0: return
             case 1: self.playSongMode1()
