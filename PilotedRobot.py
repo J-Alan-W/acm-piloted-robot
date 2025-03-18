@@ -311,6 +311,8 @@ class PilotedRobot:
         self.sendCommand(E + QUAR)
         self.sendCommand(D + EIGT)
         self.sendCommand(C + EIGT)
+
+        self.sendCommand(b'\x8D\x01') # Play song 1
     
     def playSongMode3(self):
         # Can be replaced by a different song in the future
@@ -347,6 +349,8 @@ class PilotedRobot:
         self.sendCommand(D + QUAR)
         self.sendCommand(C + EIGT)
         self.sendCommand(B + EIGT)
+
+        self.sendCommand(b'\x8D\x02') # Play song 2
     
     def playSongMode4(self):
         # Can be replaced by a different song in the future
@@ -383,3 +387,5 @@ class PilotedRobot:
         self.sendCommand(C + QUAR)
         self.sendCommand(A + QUAR)
         self.sendCommand(A + HALF)
+
+        self.sendCommand(b'\x8D\x03') # Play song 3
