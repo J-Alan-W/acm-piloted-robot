@@ -175,3 +175,5 @@ while gamepad.isConnected():
             bt7274.update_motion()
         # For testing and debugging joystick movement
         # print('%+.1f %% speed, %+.1f %% steering' % (linearSpeed * 100, turnSpeed * 100))
+
+bt7274.stop() # If controller is unplugged, terminate the serial connection
