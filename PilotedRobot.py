@@ -1,7 +1,7 @@
 # Authors: Tytrez Dixon, Cannon Miles, Alan Wallace
-# Last Updated: 3/5/2025
+# Last Updated: 4/8/2025
 # Purpose: Functions to enable the iRobot Create 2 to be controlled via a gamepad (controller)
-# We used a wireless 2.4Ghz PS3 Controller
+# We used a wireless 2.4Ghz Xbox360 Controller
 
 import serial 
 import time

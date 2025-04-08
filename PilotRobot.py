@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# Authors: Tytrez Dixon, Cannon Miles, Alan Wallace
+# Last Updated: 4/8/2025
+# Purpose: Script to control an iRobot Create 2 to be driven via a wired or wireless Xbox360 gamepad (controller)
+# We used a wireless 2.4Ghz PS3 Controller
+
 # Import necessary libraries
 # PilotedRobot is built off of code from CS330 Robotics, 
 # Time is built-in, Gamepad is from https://github.com/piborg/Gamepad
 import time
 import Gamepad
-from Controllers import PS3
+from Controllers import Xbox360
 from PilotedRobot import PilotedRobot
 
 #----------------------------------------
@@ -27,7 +32,7 @@ print('Controls transferred to Pilot.')
 #----------------------------------------
 
 # Set up gamepad
-gamepadType = PS3
+gamepadType = Xbox360
 
 # Wait for a connection
 if not Gamepad.available():
@@ -65,7 +70,7 @@ while gamepad.isConnected():
         # This is a huge elif chain because it avoids checking one event multiple times.
         
         # Face buttons are used for making the robot move while pressed
-        if control == 'TRIANGLE':
+        if control == 'Y':
             # Example of an event on press and release
             if value:
                 bt7274.set_fwd_status(1)
@@ -73,21 +78,21 @@ while gamepad.isConnected():
             else:
                 bt7274.set_fwd_status(0)
                 bt7274.update_motion()
-        elif control == 'CIRCLE':
+        elif control == 'B':
             if value:
                 bt7274.set_right_status(1)
                 bt7274.update_motion()
             else:
                 bt7274.set_right_status(0)
                 bt7274.update_motion()
-        elif control == 'CROSS':
+        elif control == 'A':
             if value:
                 bt7274.set_back_status(1)
                 bt7274.update_motion()
             else:
                 bt7274.set_back_status(0)
                 bt7274.update_motion()
-        elif control == 'SQUARE':
+        elif control == 'X':
             if value:
                 bt7274.set_left_status(1)
                 bt7274.update_motion()
@@ -124,30 +129,38 @@ while gamepad.isConnected():
             bt7274.update_motion()
 
         # Triggers should change the color of the LEDs, and also what song should play.
-        elif (control == 'L1') and value:
+        elif (control == 'LB') and value:
             bt7274.switchMode(3)
-        elif (control == 'L2') and value:
-            bt7274.switchMode(1)
-        elif (control == 'R1') and value:
+        # elif (control == 'L2') and value:
+        #     bt7274.switchMode(1)
+        elif (control == 'RB') and value:
             bt7274.switchMode(2)
-        elif (control == 'R2') and value:
-            bt7274.switchMode(4)
+        # elif (control == 'R2') and value:
+        #     bt7274.switchMode(4)
 
-        # Start, Select, and PS have special effects
+        # Start, Select, and Home buttons have special effects
         elif (control == 'START') and value:
             # Play song if a song mode has been selected with the triggers
             bt7274.playSong()
-        elif (control == 'SELECT') and value:
+        elif (control == 'BACK') and value:
             # Resets the robot
             bt7274.startSequence()
-        elif (control == 'PS') and value:
-            # PlayStation button
+        elif (control == 'XBOX') and value:
+            # XBox Home button
             # No effect right now, just an easter egg
             print('Protocol 1: Link to Pilot')
             print('Protocol 2: Uphold the Mission')
             print('Protocol 3: Protect the Pilot')
 
     elif eventType == 'AXIS':
+        # On an Xbox360 controller, the triggers are treated as axes.
+        if (control == 'RT'):
+            bt7274.switchMode(1)
+            #print('RT')
+        if (control == 'LT'):
+            bt7274.switchMode(4)
+            #print('LT')
+        
         # Joystick changed
         # Value is the magnitude of how far the joystick is away from center
         # Future work: Make robot speed proportional to how far the stick is pushed
