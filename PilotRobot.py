@@ -103,7 +103,7 @@ while gamepad.isConnected():
         # D-Pad buttons are used for making the robot go the same distance on each press. 
         # This is useful for learn-to-code games like "Get the Mouse to the Cheese"
         # The button press is and'ed with value to make sure the action only triggers on the press, not the release.
-        elif (control == 'DPAD-UP') and value:
+        elif (control == 'RA') and value:
             bt7274.set_fwd_status(1)
             bt7274.update_motion()
             time.sleep(0.5)
@@ -115,7 +115,7 @@ while gamepad.isConnected():
             time.sleep(0.5)
             bt7274.set_right_status(0)
             bt7274.update_motion()
-        elif (control == 'DPAD-DOWN') and value:
+        elif (control == 'LA') and value:
             bt7274.set_back_status(1)
             bt7274.update_motion()
             time.sleep(0.5)
