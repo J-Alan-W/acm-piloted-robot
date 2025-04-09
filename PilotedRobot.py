@@ -102,6 +102,9 @@ class PilotedRobot:
         self.sendCommand(self.reset_cmd)
         time.sleep(5)
 
+    def resetStatus(self):
+        self.status = [False, False, False, False]
+
     def safe(self):
         self.sendCommand(self.safe_cmd)
 
@@ -215,10 +218,10 @@ class PilotedRobot:
                 self.leds_color('green')
                 self.songMode = 1
             case 2:
-                self.leds_color('orange')
+                self.leds_color('yellow')
                 self.songMode = 2
             case 3:
-                self.leds_color('yellow')
+                self.leds_color('orange')
                 self.songMode = 3
             case 4:
                 self.leds_color('red')

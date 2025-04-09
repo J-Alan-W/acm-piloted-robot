@@ -100,33 +100,33 @@ while gamepad.isConnected():
                 bt7274.set_left_status(0)
                 bt7274.update_motion()
 
-        # D-Pad buttons are used for making the robot go the same distance on each press. 
-        # This is useful for learn-to-code games like "Get the Mouse to the Cheese"
-        # The button press is and'ed with value to make sure the action only triggers on the press, not the release.
-        elif (control == 'RA') and value:
-            bt7274.set_fwd_status(1)
-            bt7274.update_motion()
-            time.sleep(0.5)
-            bt7274.set_fwd_status(0)
-            bt7274.update_motion()
-        elif (control == 'DPAD-RIGHT') and value:
-            bt7274.set_right_status(1)
-            bt7274.update_motion()
-            time.sleep(0.5)
-            bt7274.set_right_status(0)
-            bt7274.update_motion()
-        elif (control == 'LA') and value:
-            bt7274.set_back_status(1)
-            bt7274.update_motion()
-            time.sleep(0.5)
-            bt7274.set_back_status(0)
-            bt7274.update_motion()
-        elif (control == 'DPAD-LEFT') and value:
-            bt7274.set_left_status(1)
-            bt7274.update_motion()
-            time.sleep(0.5)
-            bt7274.set_left_status(0)
-            bt7274.update_motion()
+        # # D-Pad buttons are used for making the robot go the same distance on each press. 
+        # # This is useful for learn-to-code games like "Get the Mouse to the Cheese"
+        # # The button press is and'ed with value to make sure the action only triggers on the press, not the release.
+        # elif (control == 'RA') and value:
+        #     bt7274.set_fwd_status(1)
+        #     bt7274.update_motion()
+        #     time.sleep(0.5)
+        #     bt7274.set_fwd_status(0)
+        #     bt7274.update_motion()
+        # elif (control == 'DPAD-RIGHT') and value:
+        #     bt7274.set_right_status(1)
+        #     bt7274.update_motion()
+        #     time.sleep(0.5)
+        #     bt7274.set_right_status(0)
+        #     bt7274.update_motion()
+        # elif (control == 'LA') and value:
+        #     bt7274.set_back_status(1)
+        #     bt7274.update_motion()
+        #     time.sleep(0.5)
+        #     bt7274.set_back_status(0)
+        #     bt7274.update_motion()
+        # elif (control == 'DPAD-LEFT') and value:
+        #     bt7274.set_left_status(1)
+        #     bt7274.update_motion()
+        #     time.sleep(0.5)
+        #     bt7274.set_left_status(0)
+        #     bt7274.update_motion()
 
         # Triggers should change the color of the LEDs, and also what song should play.
         elif (control == 'LB') and value:
@@ -144,6 +144,7 @@ while gamepad.isConnected():
             bt7274.playSong()
         elif (control == 'BACK') and value:
             # Resets the robot
+            bt7274.resetStatus()
             bt7274.startSequence()
         elif (control == 'XBOX') and value:
             # XBox Home button
@@ -154,19 +155,15 @@ while gamepad.isConnected():
 
     elif eventType == 'AXIS':
         # On an Xbox360 controller, the triggers are treated as axes.
-        if (control == 'LT'):
+        if (control == 'LT' and value == 1):
             bt7274.switchMode(1)
-        if (control == 'RT'):
+        if (control == 'RT' and value == 1):
             bt7274.switchMode(4)
         
         # Joystick changed
         # Value is the magnitude of how far the joystick is away from center
         # Future work: Make robot speed proportional to how far the stick is pushed
-        if (control == 'RIGHT-Y') and (value == 0):
-            bt7274.set_fwd_status(0)
-            bt7274.set_back_status(0)
-            bt7274.update_motion()
-        elif (control == 'RIGHT-Y') and (value > 0.1):
+        if (control == 'RIGHT-Y') and (value > 0.1):
             # In these statements, the 0.1 or -0.1 just provides a barrier 
             # so the robot's movement isn't too sensitive to stick drift.
             bt7274.set_back_status(1)
@@ -174,15 +171,20 @@ while gamepad.isConnected():
         elif (control == 'RIGHT-Y') and (value < -0.1):
             bt7274.set_fwd_status(1)
             bt7274.update_motion()
-        elif (control == 'LEFT-X') and (value == 0):
-            bt7274.set_right_status(0)
-            bt7274.set_left_status(0)
+        else:
+            bt7274.set_fwd_status(0)
+            bt7274.set_back_status(0)
             bt7274.update_motion()
-        elif (control == 'LEFT-X') and (value > 0.1):
+        
+        if (control == 'LEFT-X') and (value > 0.1):
             bt7274.set_right_status(1)
             bt7274.update_motion()
         elif (control == 'LEFT-X') and (value < -0.1):
             bt7274.set_left_status(1)
+            bt7274.update_motion()
+        else:
+            bt7274.set_right_status(0)
+            bt7274.set_left_status(0)
             bt7274.update_motion()
         # For testing and debugging joystick movement
         # print('%+.1f %% speed, %+.1f %% steering' % (linearSpeed * 100, turnSpeed * 100))
