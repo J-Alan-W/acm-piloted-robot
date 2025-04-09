@@ -154,12 +154,10 @@ while gamepad.isConnected():
 
     elif eventType == 'AXIS':
         # On an Xbox360 controller, the triggers are treated as axes.
-        if (control == 'RT'):
-            bt7274.switchMode(1)
-            #print('RT')
         if (control == 'LT'):
+            bt7274.switchMode(1)
+        if (control == 'RT'):
             bt7274.switchMode(4)
-            #print('LT')
         
         # Joystick changed
         # Value is the magnitude of how far the joystick is away from center
