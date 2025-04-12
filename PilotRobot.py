@@ -159,6 +159,32 @@ while gamepad.isConnected():
             bt7274.switchMode(1)
         elif (control == 'RT' and value == 1):
             bt7274.switchMode(4)
+
+        # Dpad changed
+        elif (control == 6 and value == 1):
+            bt7274.set_right_status(1)
+            bt7274.update_motion()
+            time.sleep(0.5)
+            bt7274.set_right_status(0)
+            bt7274.update_motion()
+        elif (control == 6 and value == -1):
+            bt7274.set_left_status(1)
+            bt7274.update_motion()
+            time.sleep(0.5)
+            bt7274.set_left_status(0)
+            bt7274.update_motion()
+        elif (control == 7 and value == 1):
+            bt7274.set_back_status(1)
+            bt7274.update_motion()
+            time.sleep(0.5)
+            bt7274.set_back_status(0)
+            bt7274.update_motion()
+        elif (control == 7 and value == -1):
+            bt7274.set_fwd_status(1)
+            bt7274.update_motion()
+            time.sleep(0.5)
+            bt7274.set_fwd_status(0)
+            bt7274.update_motion()
         
         # Joystick changed
         # Value is the magnitude of how far the joystick is away from center
@@ -167,22 +193,20 @@ while gamepad.isConnected():
             bt7274.set_fwd_status(0)
             bt7274.set_back_status(0)
             bt7274.update_motion()
-        elif (control == 'RIGHT-Y') and (value > 0.1):
-            # In these statements, the 0.1 or -0.1 just provides a barrier 
-            # so the robot's movement isn't too sensitive to stick drift.
+        elif (control == 'RIGHT-Y') and (value > 0):
             bt7274.set_back_status(1)
             bt7274.update_motion()
-        elif (control == 'RIGHT-Y') and (value < -0.1):
+        elif (control == 'RIGHT-Y') and (value < 0):
             bt7274.set_fwd_status(1)
             bt7274.update_motion()
         elif (control == 'LEFT-X') and (value == 0):
             bt7274.set_right_status(0)
             bt7274.set_left_status(0)
             bt7274.update_motion()
-        elif (control == 'LEFT-X') and (value > 0.1):
+        elif (control == 'LEFT-X') and (value > 0):
             bt7274.set_right_status(1)
             bt7274.update_motion()
-        elif (control == 'LEFT-X') and (value < -0.1):
+        elif (control == 'LEFT-X') and (value < 0):
             bt7274.set_left_status(1)
             bt7274.update_motion()
         # For testing and debugging joystick movement
