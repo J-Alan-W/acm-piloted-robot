@@ -100,34 +100,6 @@ while gamepad.isConnected():
                 bt7274.set_left_status(0)
                 bt7274.update_motion()
 
-        # # D-Pad buttons are used for making the robot go the same distance on each press. 
-        # # This is useful for learn-to-code games like "Get the Mouse to the Cheese"
-        # # The button press is and'ed with value to make sure the action only triggers on the press, not the release.
-        # elif (control == 'RA') and value:
-        #     bt7274.set_fwd_status(1)
-        #     bt7274.update_motion()
-        #     time.sleep(0.5)
-        #     bt7274.set_fwd_status(0)
-        #     bt7274.update_motion()
-        # elif (control == 'DPAD-RIGHT') and value:
-        #     bt7274.set_right_status(1)
-        #     bt7274.update_motion()
-        #     time.sleep(0.5)
-        #     bt7274.set_right_status(0)
-        #     bt7274.update_motion()
-        # elif (control == 'LA') and value:
-        #     bt7274.set_back_status(1)
-        #     bt7274.update_motion()
-        #     time.sleep(0.5)
-        #     bt7274.set_back_status(0)
-        #     bt7274.update_motion()
-        # elif (control == 'DPAD-LEFT') and value:
-        #     bt7274.set_left_status(1)
-        #     bt7274.update_motion()
-        #     time.sleep(0.5)
-        #     bt7274.set_left_status(0)
-        #     bt7274.update_motion()
-
         # Triggers should change the color of the LEDs, and also what song should play.
         elif (control == 'LB') and value:
             bt7274.switchMode(3)
@@ -160,31 +132,35 @@ while gamepad.isConnected():
         elif (control == 'RT' and value == 1):
             bt7274.switchMode(4)
 
-        # Dpad changed
-        elif (control == 6 and value == 1):
-            bt7274.set_right_status(1)
-            bt7274.update_motion()
-            time.sleep(0.5)
-            bt7274.set_right_status(0)
-            bt7274.update_motion()
-        elif (control == 6 and value == -1):
-            bt7274.set_left_status(1)
-            bt7274.update_motion()
-            time.sleep(0.5)
-            bt7274.set_left_status(0)
-            bt7274.update_motion()
-        elif (control == 7 and value == 1):
-            bt7274.set_back_status(1)
-            bt7274.update_motion()
-            time.sleep(0.5)
-            bt7274.set_back_status(0)
-            bt7274.update_motion()
-        elif (control == 7 and value == -1):
-            bt7274.set_fwd_status(1)
-            bt7274.update_motion()
-            time.sleep(0.5)
-            bt7274.set_fwd_status(0)
-            bt7274.update_motion()
+        # This code *should* work, but couldn't be tested in time to make the final build.
+        # The mapping for the D-Pad on an Xbox controller isn't shown in the Controllers class
+        # but thanks to testing we were able to figure out the D-Pad input consists of two axes (vertical and horozontal)
+        # Axis 6 should be horozontal, Axis 7 should be vertical
+        # # Dpad changed
+        # elif (control == 6 and value == 1):
+        #     bt7274.set_right_status(1)
+        #     bt7274.update_motion()
+        #     time.sleep(0.5)
+        #     bt7274.set_right_status(0)
+        #     bt7274.update_motion()
+        # elif (control == 6 and value == -1):
+        #     bt7274.set_left_status(1)
+        #     bt7274.update_motion()
+        #     time.sleep(0.5)
+        #     bt7274.set_left_status(0)
+        #     bt7274.update_motion()
+        # elif (control == 7 and value == 1):
+        #     bt7274.set_back_status(1)
+        #     bt7274.update_motion()
+        #     time.sleep(0.5)
+        #     bt7274.set_back_status(0)
+        #     bt7274.update_motion()
+        # elif (control == 7 and value == -1):
+        #     bt7274.set_fwd_status(1)
+        #     bt7274.update_motion()
+        #     time.sleep(0.5)
+        #     bt7274.set_fwd_status(0)
+        #     bt7274.update_motion()
         
         # Joystick changed
         # Value is the magnitude of how far the joystick is away from center
