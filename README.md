@@ -55,7 +55,7 @@ Please Note: Any wireless controllers should be connected via a 2.4Ghz dongle. D
 <li> Connect to the Raspberry Pi via SSH (https://www.raspberrypi.com/documentation/computers/remote-access.html).
 <li> Type the commands <code>sudo apt update</code> and <code>sudo apt full-upgrade</code>
 <li> Newer versions of Raspbian don't have git installed by default. You can check via <code>git --version</code>. If git isn't found, install it via <code>sudo apt-get install git</code>
-<li> Clone the repo with <code>git clone https://github.com/J-Alan-W/acm-piloted-robot</code>
+<li> Clone the repo with <code>git clone http://github.com/J-Alan-W/acm-piloted-robot</code>
 <li> Python should be installed by default. Check the version with <code>python3 --version</code>
 <li> Install the Python serial module for controlling the robot with <code>sudo apt-get install python3-serial</code>
 <li> Create a new crontab job to run PilotRobot.py on startup with <code>crontab -e</code> (If you have multiple editors, choose the nano in-terminal editor).
